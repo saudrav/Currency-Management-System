@@ -4,7 +4,8 @@
 <div class="alert alert-success" *ngIf='message'>{{message}}</div>
 
 <div class="container">
-  <table class="table">
+    <table class="table table-striped">
+
     <thead>
       <tr>
         <th>ID</th>
@@ -16,9 +17,9 @@
     <tbody>
         <tr *ngFor="let curr of currs">
         <td>{{curr.id}}</td>
-        <td>{{curr.currFrom}}</td>
-        <td>{{curr.currTo}}</td>
-        <td>{{curr.currRate}}</td>
+        <td>{{curr.currencyFrom}}</td>
+        <td>{{curr.currencyTo}}</td>
+        <td>{{curr.currencyRate}}</td>
         <!-- <td><button (click)="updateCurrency(curr.id)" class="btn btn-success">Update</button></td> -->
         <!-- <td><button (click)="deleteCurrency(curr.id)" class="btn btn-warning">Delete</button></td> -->
         </tr>

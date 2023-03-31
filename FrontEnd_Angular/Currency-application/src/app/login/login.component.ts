@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { JWTAuthenticationService } from '../services/jwtauthentication.service';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +16,8 @@ export class LoginComponent {
 
   
   constructor(
-    private router: Router
-    //private hardcodedAuthenticationService: HardcodedAuthenticationService
+    private router: Router,
+    public jwtAuthenticationService: JWTAuthenticationService
   ) {}
 
   ngOnInit() {
@@ -24,11 +25,11 @@ export class LoginComponent {
 
   handleLogin() {
     // console.log(this.username);
-    if(this.username==="saudrav" && this.password === 'dummy') {
-    //if(this.hardcodedAuthenticationService.authenticate(this.username, this.password)) {
-      //Redirect to home Page
-      this.invalidLogin = false
-      this.router.navigate(['currency-management', this.username])
+    // if(this.username==="saudrav" && this.password === 'dummy') {
+    if(this.jwtAuthenticationService.authenticate(this.username, this.password)) {
+        this.invalidLogin = false
+        //Redirect to currency-management Page
+        this.router.navigate(['currency-management', this.username])
     } else {
       this.invalidLogin = true
     }

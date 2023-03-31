@@ -3,3 +3,28 @@
 <div>
     <h2>{{message}}</h2>
 </div>
+
+
+<div class="container">
+    <table class="table">
+
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Currency From</th>
+        <th>Currency To</th>
+        <th>Currency Multiple</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let curr of currs">
+        <td>{{curr.id}}</td>
+        <td>{{curr.currencyFrom}}</td>
+        <td>{{curr.currencyTo}}</td>
+        <td>{{curr.currencyRate}}</td>
+        </tr>
+    </tbody>
+
+  </table>
+
+</div>
