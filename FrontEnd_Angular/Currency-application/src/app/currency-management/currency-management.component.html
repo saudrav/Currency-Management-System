@@ -1,0 +1,33 @@
+<h2>Welcome {{user}}</h2>
+<p>{{message}}</p>
+
+<div class="alert alert-success" *ngIf='message'>{{message}}</div>
+
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Currency From</th>
+        <th>Currency To</th>
+        <th>Currency Multiple</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let curr of currs">
+        <td>{{curr.id}}</td>
+        <td>{{curr.currFrom}}</td>
+        <td>{{curr.currTo}}</td>
+        <td>{{curr.currRate}}</td>
+        <!-- <td><button (click)="updateCurrency(curr.id)" class="btn btn-success">Update</button></td> -->
+        <!-- <td><button (click)="deleteCurrency(curr.id)" class="btn btn-warning">Delete</button></td> -->
+        </tr>
+    </tbody>
+
+  </table>
+
+  <div class="row">
+      <!-- <button (click)="addNewCurrency()" class="btn btn-success">Add</button> -->
+  </div>
+
+</div>
