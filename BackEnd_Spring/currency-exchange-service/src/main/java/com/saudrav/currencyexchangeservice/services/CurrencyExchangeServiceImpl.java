@@ -1,6 +1,7 @@
 package com.saudrav.currencyexchangeservice.services;
 
 import com.saudrav.currencyexchangeservice.entity.Currency;
+import com.saudrav.currencyexchangeservice.exceptions.CurrencyRecordNotFoundException;
 import com.saudrav.currencyexchangeservice.repository.CurrencyExchangeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,12 @@ public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
 
     @Override
     public List<Currency> getAllCurrencyExchange() {
+    	try {
         return currencyExchangeRepository.findAll();
+    	}catch (Exception e) {
+    		throw new CurrencyRecordNotFoundException("No Record found, please contact admin");
+    	}
+    	
     }
 
 	@Override
