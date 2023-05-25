@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Currency } from '../home/home.component';
 import { CurrencyService } from '../services/api/currency.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-currency-management',
@@ -12,12 +13,7 @@ export class CurrencyManagementComponent implements OnInit {
 
   message : String = 'Table will load soon';
   user : String = '';
-  currs : Currency[] = [];  
-  // currs : Currency[] = [
-  //   new Currency(1, 'USD', 'INR', 82.75),
-  //   new Currency(2, 'EUR', 'INR', 95.50),
-  //   new Currency(3, 'AUD', 'INR', 45.37)
-  // ];
+  currs : Currency[] = [];
 
   constructor(
     private route:ActivatedRoute,
@@ -29,8 +25,9 @@ export class CurrencyManagementComponent implements OnInit {
     this.fetchAllCurrency();
   }
 
-  fetchAllCurrency() {    
-    this.currencyService.retrieveAllCurrency().subscribe(
+  fetchAllCurrency() {     
+    const headers = new HttpHeaders().set('Authorization', 'Bearer '+sessionStorage.getItem('token'));
+    this.currencyService.retrieveAllCurrency(headers).subscribe(
       response => {
         console.log(response);
         this.currs = response;

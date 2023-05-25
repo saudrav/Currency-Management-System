@@ -1,8 +1,11 @@
 package com.saudrav.service;
 
-import com.saudrav.entity.UserCredential;
+import com.saudrav.dto.AuthResponse;
+import com.saudrav.entity.UserRecords;
 import com.saudrav.jwtUtil.JwtService;
-import com.saudrav.repository.UserCredentialRepository;
+import com.saudrav.repository.UserRecordsRepository;
+
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,21 +15,30 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     @Autowired
-    private UserCredentialRepository repository;
+    private UserRecordsRepository repository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private JwtService jwtService;
 
-    public String saveUser(UserCredential credential) {
-        credential.setPassword(passwordEncoder.encode(credential.getPassword()));
-        repository.save(credential);
-        return "user added to the system";
+    public String saveUser(UserRecords userRecords) {
+    	
+    	userRecords.setPassword(passwordEncoder.encode(userRecords.getPassword()));
+    	Optional<UserRecords> credential = repository.findByUsername(userRecords.getUsername());
+    	if(credential.isEmpty()) {
+    		repository.save(userRecords);
+            return "user added to the system";
+    	}
+    	return "User "+userRecords.getUsername()+" already exist in sysytem";
     }
+    
 
-    public String generateToken(String username) {
-        return jwtService.generateToken(username);
+    public AuthResponse generateTokenandUserRole(String username) {
+    	
+    	Optional<UserRecords> credential = repository.findByUsername(username);
+    	
+    	return new AuthResponse(username, jwtService.generateToken(username), credential.get().getRole());    	
     }
 
     public void validateToken(String token) {

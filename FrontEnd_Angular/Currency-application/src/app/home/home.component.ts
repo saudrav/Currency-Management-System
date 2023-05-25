@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyService } from '../services/api/currency.service';
+import { HttpHeaders } from '@angular/common/http';
 
 export class Currency {
   constructor(
@@ -30,7 +31,8 @@ export class HomeComponent implements OnInit {
   }
 
   fetchAllCurrency() {    
-    this.currencyService.retrieveAllCurrency().subscribe(
+    const headers = new HttpHeaders().set('Authorization', 'Bearer '+sessionStorage.getItem('token'));
+    this.currencyService.retrieveAllCurrency(headers).subscribe(
       response => {
         console.log(response);
         this.currs = response;

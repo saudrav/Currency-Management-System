@@ -1,7 +1,7 @@
 package com.saudrav.config;
 
-import com.saudrav.entity.UserCredential;
-import com.saudrav.repository.UserCredentialRepository;
+import com.saudrav.entity.UserRecords;
+import com.saudrav.repository.UserRecordsRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,11 +15,11 @@ import java.util.Optional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserCredentialRepository repository;
+    private UserRecordsRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserCredential> credential = repository.findByName(username);
+        Optional<UserRecords> credential = repository.findByUsername(username);
         return credential.map(CustomUserDetails::new).orElseThrow(() -> new UsernameNotFoundException("user not found with name :" + username));
     }
 }

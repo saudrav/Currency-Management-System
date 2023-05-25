@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 //@Configuration
-//public class ApiGatewayConfiguration {
-//	
+public class ApiGatewayConfiguration {
+	
 //	@Bean
 //	public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
 //		return builder.routes()
@@ -28,12 +28,11 @@ import org.springframework.context.annotation.Configuration;
 //								"/currency-conversion/${segment}"))
 //						.uri("lb://currency-conversion"))
 //				
-//				.route(p -> p
-//						.path("/get")
+//				.route(p -> p.path("/get")
 //						.filters(f -> f
 //								.addRequestHeader("MyHeader", "MyURI")
 //								.addRequestParameter("Param", "MyValue"))
 //						.uri("http://httpbin.org:80"))
 //				.build();
 //	}
-//}
+}

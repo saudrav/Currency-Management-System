@@ -65,6 +65,9 @@
             },
             "development": {
               "browserTarget": "Currency-application:build:development"
+            },
+            "options": {
+              "port": 5000
             }
           },
           "defaultConfiguration": "development"

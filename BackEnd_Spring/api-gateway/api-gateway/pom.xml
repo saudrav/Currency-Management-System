@@ -18,6 +18,13 @@
 		<spring-cloud.version>2022.0.1</spring-cloud.version>
 	</properties>
 	<dependencies>
+		<!--
+		Q. Why webflux?
+		1. Support for Functional Programming: WebFlux offers a functional programming model, where you can define your routes and handlers using functional constructs instead of traditional annotations and classes. This can make your code more concise, modular, and easier to test.
+		2. Asynchronous Processing: With WebFlux, you can leverage asynchronous processing to perform tasks such as making API calls to downstream services, aggregating responses, and applying filters or transformations to requests and responses. This can be beneficial when you need to handle multiple requests simultaneously and perform operations concurrently.
+		3. Integration with Reactive Streams: WebFlux is designed to integrate seamlessly with Reactive Streams, which is an initiative that provides a common set of standards for reactive programming in Java. This integration allows you to leverage a wide range of reactive libraries and tools, making it easier to build end-to-end reactive systems.
+		4. Efficiency and Scalability: WebFlux is built on the principles of reactive programming, which enables efficient handling of concurrent requests. It can handle a large number of requests with a relatively small number of threads, making it suitable for high-throughput scenarios. This can improve the overall scalability and performance of your API gateway.
+		-->		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
@@ -33,6 +40,21 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -1,25 +1,49 @@
 spring:
  cloud:
    gateway:
+     globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "GET,POST,PUT,DELETE"
+            allowedHeaders: "Authorization,Content-Type"
+#            allowCredentials: true
+#            maxAge: 3600   
+   
      routes:
        - id: currency-exchange
          uri: lb://CURRENCY-EXCHANGE
          predicates:
            - Path=/currency-exchange/**
-#         filters:
-#           - AuthenticationFilter
+         filters:
+           - AuthenticationFilter
 
        - id: currency-conversion
          uri: lb://CURRENCY-CONVERSION
          predicates:
            - Path=/currency-conversion/**
-#         filters:
-#           - AuthenticationFilter
+         filters:
+           - AuthenticationFilter
+           
+       - id: currency-conversion-modifyURL
+         uri: lb://CURRENCY-CONVERSION
+         predicates:
+           - Path=/currency-conversion-new/**
+         filters:
+            - RewritePath=/currency-conversion-new/(?<segment>.*), /currency-conversion/${segment}
 
        - id: identity-service
          uri: lb://IDENTITY-SERVICE
          predicates:
            - Path=/auth/**
+           
+       - id: get-route
+         uri: http://httpbin.org:80
+         predicates:
+           - Path=/get
+         filters:
+           - AddRequestHeader=MyHeader, MyURI
+           - AddRequestParameter=Param, MyValue
 
 # application:
 #   name: SWIGGY-GATEWAY

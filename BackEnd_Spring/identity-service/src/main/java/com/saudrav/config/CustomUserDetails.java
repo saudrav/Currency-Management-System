@@ -3,7 +3,7 @@ package com.saudrav.config;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.saudrav.entity.UserCredential;
+import com.saudrav.entity.UserRecords;
 
 import java.util.Collection;
 
@@ -12,7 +12,7 @@ public class CustomUserDetails implements UserDetails {
     private String username;
     private String password;
 
-    public CustomUserDetails(UserCredential userCredential) {
+    public CustomUserDetails(UserRecords userCredential) {
         this.username = userCredential.getName();
         this.password = userCredential.getPassword();
     }

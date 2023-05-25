@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { JWTAuthenticationService } from '../services/jwtauthentication.service';
+import { JWTAuthenticationService } from '../services/api/jwtauthentication.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent {
 
-  username = 'saudrav'
-  password = ''
-  errorMessage = 'Invalid Credentials'
-  invalidLogin = false
+  username : string;
+  password : string;
+  errorMessage = 'Invalid Credentials';
+  invalidLogin : boolean;
 
   
   constructor(
@@ -24,15 +25,20 @@ export class LoginComponent {
   }
 
   handleLogin() {
-    // console.log(this.username);
-    // if(this.username==="saudrav" && this.password === 'dummy') {
-    if(this.jwtAuthenticationService.authenticate(this.username, this.password)) {
-        this.invalidLogin = false
+    
+    this.jwtAuthenticationService.authenticate(this.username, this.password)
+      .then( status => {
+        console.log('login Status : '+status)
+        this.invalidLogin = false;
         //Redirect to currency-management Page
-        this.router.navigate(['currency-management', this.username])
-    } else {
-      this.invalidLogin = true
-    }
+        this.router.navigate(['currency-management', this.username]);
+        
+      })
+      .catch(error => {
+        console.error('login Status : '+error);
+        // Handle error here        
+        this.invalidLogin = true
+      });
   }
 
 }
