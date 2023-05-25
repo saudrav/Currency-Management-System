@@ -1,6 +1,9 @@
 package com.saudrav.currencyexchangeservice.controllers;
 
 import com.saudrav.currencyexchangeservice.entity.Currency;
+import com.saudrav.currencyexchangeservice.exceptions.CurrencyRecordAlreadyAddedException;
+import com.saudrav.currencyexchangeservice.exceptions.CurrencyRecordNotFoundException;
+import com.saudrav.currencyexchangeservice.exceptions.CurrencySearchInvalidValueException;
 import com.saudrav.currencyexchangeservice.model.CurrencyModel;
 import com.saudrav.currencyexchangeservice.services.CurrencyExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 //@CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -32,8 +36,18 @@ public class CurrencyExchangeController {
 
     @GetMapping("/all")
     public List<Currency> getAllCurrencyExchange() {
-        List<Currency> currencylist = currencyExchangeService.getAllCurrencyExchange();
-        return currencylist;
+        Optional<List<Currency>> currencylist = currencyExchangeService.getAllCurrencyExchange();
+        
+        return currencylist
+                .orElseThrow(() -> new CurrencyRecordNotFoundException("No Record found, please contact admin"));
+
+//        if(currencylist != null) {
+//            return currencylist;        	
+//        }
+//        else{
+//    		throw new CurrencyRecordNotFoundException("No Record found, please contact admin");
+//    	}
+        
     }
 
     @GetMapping("/{currFrom}/to/{currTo}")
@@ -46,7 +60,13 @@ public class CurrencyExchangeController {
     
     @PostMapping("/addcurrency")
     public String addNewCurrencyExchange(@RequestBody Currency currency) {
-        return currencyExchangeService.addNewCurrencyExchange(currency);
+        String addRecordStatus = currencyExchangeService.addNewCurrencyExchange(currency);
+        if(addRecordStatus.equals("Records added Successfully")) {
+        	return addRecordStatus;
+        }
+        else {
+        	throw new CurrencyRecordAlreadyAddedException("Records already added, please check");
+        }
     }    
 
     @PutMapping("/modifycurrency")

@@ -15,5 +15,17 @@ public class ExchangeServiceExceptionController extends Throwable {		//ResponseE
 		ErrorMapper em = new ErrorMapper(HttpStatus.NOT_FOUND.value(), exception.getMessage(), new Date());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(em);
 	}
-
+	
+	@ExceptionHandler(CurrencyRecordAlreadyAddedException.class)
+	public ResponseEntity<ErrorMapper> handleCurrencyRecordAlreadyAddedException(CurrencyRecordAlreadyAddedException exception) {
+		ErrorMapper em = new ErrorMapper(HttpStatus.NOT_ACCEPTABLE.value(), exception.getMessage(), new Date());
+		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(em);
+	}
+	
+	@ExceptionHandler(CurrencySearchInvalidValueException.class)
+	public ResponseEntity<ErrorMapper> handleCurrencySearchInvalidValueException(CurrencySearchInvalidValueException exception) {
+		ErrorMapper em = new ErrorMapper(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), new Date());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(em);
+	}
+	
 }
